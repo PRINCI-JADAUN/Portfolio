@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Princi Jadaun — MERN Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#0B1E33;
+    --navy-light:#132A45;
+    --paper:#F5F7FA;
+    --paper-line:#DDE4EC;
+    --ink:#12233A;
+    --ink-soft:#45566E;
+    --accent:#E4572E;
+    --accent-soft:#F6C6B4;
+    --line:#C7D2E0;
+    --mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+    --maxw:1040px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.55;
+  }
+
+  a{color:inherit;}
+  h1,h2,h3{margin:0; font-family:var(--sans);}
+  p{margin:0;}
+  ul{margin:0; padding:0; list-style:none;}
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  /* ---------- blueprint grid texture ---------- */
+  .grid-bg{
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:34px 34px;
+  }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,30,51,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(255,255,255,0.12);
+  }
+  .nav-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:16px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .nav-mark{
+    font-family:var(--mono);
+    color:#fff;
+    font-size:14px;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,0.35);
+    padding:4px 9px;
+    border-radius:3px;
+  }
+  .nav-links{
+    display:flex;
+    gap:26px;
+  }
+  .nav-links a{
+    color:rgba(255,255,255,0.75);
+    text-decoration:none;
+    font-size:14px;
+    font-family:var(--mono);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:#fff;}
+  .nav-cta{
+    color:#fff !important;
+    border:1px solid rgba(255,255,255,0.4);
+    padding:6px 12px;
+    border-radius:3px;
+  }
+  .nav-toggle{display:none;}
+
+  @media (max-width:640px){
+    .nav-links{display:none;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--navy);
+    color:#fff;
+    padding:88px 0 60px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-kicker{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent-soft);
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(44px, 8vw, 78px);
+    line-height:0.98;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .hero-role{
+    margin-top:18px;
+    font-size:clamp(17px, 2.4vw, 21px);
+    color:rgba(255,255,255,0.82);
+    font-weight:500;
+  }
+  .hero-tag{
+    margin-top:22px;
+    max-width:520px;
+    font-size:16px;
+    color:rgba(255,255,255,0.68);
+  }
+
+  .titleblock{
+    margin-top:52px;
+    border:1px solid rgba(255,255,255,0.28);
+    background:rgba(255,255,255,0.03);
+    max-width:560px;
+  }
+  .titleblock-row{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    border-bottom:1px solid rgba(255,255,255,0.18);
+  }
+  .titleblock-row:last-child{border-bottom:none;}
+  .tb-label{
+    font-family:var(--mono);
+    font-size:11px;
+    color:rgba(255,255,255,0.5);
+    padding:10px 12px;
+    border-right:1px solid rgba(255,255,255,0.18);
+    letter-spacing:0.03em;
+  }
+  .tb-value{
+    font-family:var(--mono);
+    font-size:13px;
+    color:#fff;
+    padding:10px 12px;
+  }
+  .tb-value a{text-decoration:none; color:#fff;}
+  .tb-value a:hover{color:var(--accent-soft);}
+
+  /* ---------- section shell ---------- */
+  section{
+    padding:74px 0;
+    border-bottom:1px solid var(--paper-line);
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:38px;
+  }
+  .section-num{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+  }
+  .section-head h2{
+    font-size:28px;
+    font-weight:700;
+  }
+  .section-rule{
+    flex:1;
+    height:1px;
+    background:repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 11px);
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:48px;
+  }
+  .about-lead{
+    font-size:19px;
+    color:var(--ink);
+    max-width:60ch;
+  }
+  .about-lead + p{margin-top:16px; color:var(--ink-soft); font-size:16px; max-width:58ch;}
+
+  .fact-list{
+    border-left:2px solid var(--line);
+    padding-left:22px;
+  }
+  .fact{margin-bottom:20px;}
+  .fact:last-child{margin-bottom:0;}
+  .fact-k{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-soft);
+    letter-spacing:0.03em;
+    margin-bottom:4px;
+  }
+  .fact-v{font-size:15px; font-weight:500;}
+
+  @media (max-width:760px){
+    .about-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- skills ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:34px 48px;
+  }
+  .skill-group-name{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--accent);
+    margin-bottom:12px;
+    letter-spacing:0.03em;
+  }
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    font-size:14px;
+    padding:6px 12px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:#fff;
+    color:var(--ink);
+  }
+  @media (max-width:640px){
+    .skill-groups{grid-template-columns:1fr;}
+  }
+
+  /* ---------- experience ---------- */
+  .xp-card{
+    display:grid;
+    grid-template-columns:170px 1fr;
+    gap:28px;
+  }
+  .xp-date{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--ink-soft);
+    padding-top:4px;
+  }
+  .xp-role{font-size:19px; font-weight:700;}
+  .xp-org{
+    font-size:15px;
+    color:var(--ink-soft);
+    margin-top:2px;
+    margin-bottom:16px;
+  }
+  .xp-points li{
+    position:relative;
+    padding-left:20px;
+    margin-bottom:10px;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .xp-points li::before{
+    content:"";
+    position:absolute;
+    left:0; top:9px;
+    width:6px; height:1px;
+    background:var(--accent);
+  }
+  @media (max-width:640px){
+    .xp-card{grid-template-columns:1fr;}
+    .xp-date{padding-top:0; margin-bottom:6px;}
+  }
+
+  /* ---------- projects ---------- */
+  .proj-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+  }
+  .proj-card{
+    border:1px solid var(--line);
+    background:#fff;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    min-height:100%;
+  }
+  .proj-tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--accent);
+    border:1px solid var(--accent-soft);
+    background:#FDEDE7;
+    padding:3px 8px;
+    border-radius:3px;
+    align-self:flex-start;
+    margin-bottom:14px;
+  }
+  .proj-title{font-size:17px; font-weight:700; margin-bottom:6px;}
+  .proj-date{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .proj-points li{
+    font-size:14px;
+    color:var(--ink-soft);
+    padding-left:16px;
+    position:relative;
+    margin-bottom:8px;
+  }
+  .proj-points li::before{
+    content:"";
+    position:absolute;
+    left:0; top:8px;
+    width:5px; height:1px;
+    background:var(--ink-soft);
+  }
+  .proj-stack{
+    margin-top:auto;
+    padding-top:16px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--ink-soft);
+    border-top:1px dashed var(--line);
+  }
+  @media (max-width:860px){
+    .proj-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .proj-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- credentials ---------- */
+  .cred-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+  }
+  .cred-block h3{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--accent);
+    margin-bottom:16px;
+    letter-spacing:0.03em;
+  }
+  .cred-item{
+    padding:12px 0;
+    border-bottom:1px solid var(--paper-line);
+    font-size:14.5px;
+  }
+  .cred-item:last-child{border-bottom:none;}
+  @media (max-width:700px){
+    .cred-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- contact / footer ---------- */
+  footer{
+    background:var(--navy);
+    color:#fff;
+    padding:80px 0 40px;
+  }
+  .contact-head h2{
+    font-size:clamp(30px, 5vw, 46px);
+    max-width:11ch;
+    line-height:1.08;
+  }
+  .contact-sub{
+    margin-top:16px;
+    color:rgba(255,255,255,0.65);
+    max-width:46ch;
+    font-size:16px;
+  }
+  .contact-actions{
+    margin-top:34px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .btn{
+    font-family:var(--mono);
+    font-size:14px;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:3px;
+    border:1px solid rgba(255,255,255,0.35);
+    color:#fff;
+    transition:background .15s ease, border-color .15s ease;
+    display:inline-block;
+  }
+  .btn:hover{background:rgba(255,255,255,0.08);}
+  .btn-solid{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .btn-solid:hover{background:#c9491f;}
+
+  .footer-meta{
+    margin-top:70px;
+    padding-top:24px;
+    border-top:1px solid rgba(255,255,255,0.15);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:rgba(255,255,255,0.45);
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark">PJ</a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Work</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero grid-bg">
+    <div class="wrap">
+      <p class="hero-kicker">// portfolio — v1.0</p>
+      <h1>Princi<br />Jadaun</h1>
+      <p class="hero-role">MERN Stack Developer &amp; MCA Student</p>
+      <p class="hero-tag">
+        I build full-stack products with React, Node, and MongoDB —
+        from a live internship codebase to campus hackathons and
+        solo side projects.
+      </p>
+
+      <div class="titleblock">
+        <div class="titleblock-row">
+          <span class="tb-label">LOCATION</span>
+          <span class="tb-value">Ghaziabad, Uttar Pradesh, India</span>
+        </div>
+        <div class="titleblock-row">
+          <span class="tb-label">EMAIL</span>
+          <span class="tb-value"><a href="mailto:jadaunprinci11@gmail.com">jadaunprinci11@gmail.com</a></span>
+        </div>
+        <div class="titleblock-row">
+          <span class="tb-label">PHONE</span>
+          <span class="tb-value"><a href="tel:+918791391891">+91 87913 91891</a></span>
+        </div>
+        <div class="titleblock-row">
+          <span class="tb-label">PROFILES</span>
+          <span class="tb-value">LinkedIn · GitHub</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>About</h2>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="about-grid">
+        <div>
+          <p class="about-lead">
+            I'm a second-year MCA student who spent the last five months
+            apprenticing on a live product team — shipping React
+            interfaces and REST APIs that real users depended on, not
+            just coursework.
+          </p>
+          <p>
+            Outside of client work, I build things I'm curious about:
+            a multi-agent chatbot with LangChain and the Gemini API,
+            a MERN app for an animal-welfare NGO, and a handful of
+            frontend experiments. I like owning a feature end to end —
+            schema to screen — and I keep a lot of Postman tabs open
+            while I do it.
+          </p>
+        </div>
+
+        <div class="fact-list">
+          <div class="fact">
+            <p class="fact-k">CURRENTLY</p>
+            <p class="fact-v">MCA — ABES Engineering College, Ghaziabad</p>
+          </div>
+          <div class="fact">
+            <p class="fact-k">PREVIOUSLY</p>
+            <p class="fact-v">MERN Stack Developer Intern, ConsultIT</p>
+          </div>
+          <div class="fact">
+            <p class="fact-k">FOCUS</p>
+            <p class="fact-v">React · Node.js · Express.js · MongoDB</p>
+          </div>
+          <div class="fact">
+            <p class="fact-k">LOOKING FOR</p>
+            <p class="fact-v">Entry-level Software Developer roles</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>Skills</h2>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="skill-groups">
+        <div class="skill-group">
+          <p class="skill-group-name">LANGUAGES</p>
+          <div class="chip-row">
+            <span class="chip">C++</span>
+            <span class="chip">Java</span>
+            <span class="chip">Python</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">SQL</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-name">WEB TECHNOLOGIES</p>
+          <div class="chip-row">
+            <span class="chip">React.js</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">Express.js</span>
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS3</span>
+            <span class="chip">Bootstrap</span>
+            <span class="chip">Tailwind CSS</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-name">DATABASES</p>
+          <div class="chip-row">
+            <span class="chip">MongoDB</span>
+            <span class="chip">MySQL</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-name">DEVELOPER TOOLS</p>
+          <div class="chip-row">
+            <span class="chip">Git</span>
+            <span class="chip">GitHub</span>
+            <span class="chip">VS Code</span>
+            <span class="chip">Postman</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-name">UI/UX TOOLS</p>
+          <div class="chip-row">
+            <span class="chip">Figma</span>
+            <span class="chip">Adobe XD</span>
+            <span class="chip">Canva</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-name">BI &amp; VISUALIZATION</p>
+          <div class="chip-row">
+            <span class="chip">Power BI</span>
+            <span class="chip">Tableau Public</span>
+            <span class="chip">Azure Power BI Service</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-name">DATA PROGRAMMING &amp; LIBRARIES</p>
+          <div class="chip-row">
+            <span class="chip">Python (Pandas, NumPy)</span>
+            <span class="chip">R</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <p class="skill-group-name">BIG DATA ANALYTICS</p>
+          <div class="chip-row">
+            <span class="chip">Apache Spark</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Experience</h2>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="xp-card">
+        <p class="xp-date">Jan 2026 —<br />May 2026</p>
+        <div>
+          <p class="xp-role">MERN Stack Developer Intern</p>
+          <p class="xp-org">ConsultIT Company, Ghaziabad</p>
+          <ul class="xp-points">
+            <li>Designed responsive React.js interfaces, improving page load performance by up to 20%.</li>
+            <li>Built and integrated 10+ backend features and REST APIs using Node.js, Express.js, and MongoDB.</li>
+            <li>Collaborated in a 5-member Agile team, maintaining Git-based version control for on-time delivery.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>Selected work</h2>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="proj-grid">
+        <div class="proj-card">
+          <span class="proj-tag">AI / AGENTS</span>
+          <p class="proj-title">Career Guidance Chatbot</p>
+          <p class="proj-date">Feb 2026</p>
+          <ul class="proj-points">
+            <li>Multi-agent chatbot coordinating 3+ specialised agents via CrewAI and LangChain.</li>
+            <li>Powered by the Google Gemini API for natural, context-aware conversations.</li>
+            <li>Interactive Streamlit interface for a simple, guided user journey.</li>
+          </ul>
+          <p class="proj-stack">CrewAI · LangChain · Gemini API · Streamlit</p>
+        </div>
+
+        <div class="proj-card">
+          <span class="proj-tag">FULL-STACK</span>
+          <p class="proj-title">Wings and Tails NGO Website</p>
+          <p class="proj-date">Nov 2025</p>
+          <ul class="proj-points">
+            <li>Full-stack MERN app for adoption listings and donation management.</li>
+            <li>JWT authentication with role-based access for admins and visitors.</li>
+            <li>Self-service admin dashboard with full CRUD for non-technical staff.</li>
+          </ul>
+          <p class="proj-stack">React · Node.js · Express.js · MongoDB · JWT</p>
+        </div>
+
+        <div class="proj-card">
+          <span class="proj-tag">FRONTEND</span>
+          <p class="proj-title">PetShop Website</p>
+          <p class="proj-date">Sep 2024</p>
+          <ul class="proj-points">
+            <li>Responsive e-commerce site with a 20+ item product catalog.</li>
+            <li>Fully functional shopping cart built in vanilla JavaScript.</li>
+            <li>Fine-tuned for visual consistency across 4+ major browsers.</li>
+          </ul>
+          <p class="proj-stack">HTML5 · CSS3 · JavaScript</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="credentials">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2>Credentials</h2>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="cred-grid">
+        <div class="cred-block">
+          <h3>CERTIFICATIONS</h3>
+          <div class="cred-item">Python Essentials 1 &amp; 2 — Cisco NetAcad</div>
+          <div class="cred-item">CCNA: Introduction to Networking — Cisco NetAcad</div>
+          <div class="cred-item">Web Development Training — Internshala (HTML, CSS, JavaScript, Bootstrap)</div>
+          <div class="cred-item">Android App Building using Kotlin — Ainwik Infotech</div>
+        </div>
+
+        <div class="cred-block">
+          <h3>ACHIEVEMENTS</h3>
+          <div class="cred-item">Collaborated with a 4-member team at HackIndia 2026 to develop and present an innovative solution.</div>
+          <div class="cred-item">Ranked 3rd in a UI Designing competition on Canva, recognised for high-fidelity wireframes and intuitive layouts.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact" class="grid-bg">
+  <div class="wrap">
+    <div class="contact-head">
+      <h2>Let's build something.</h2>
+      <p class="contact-sub">
+        I'm looking for an entry-level Software Developer role where I
+        can keep shipping full-stack features. Reach out — I reply
+        fastest by email.
+      </p>
+    </div>
+
+    <div class="contact-actions">
+      <a class="btn btn-solid" href="mailto:jadaunprinci11@gmail.com">Email me</a>
+      <a class="btn" href="tel:+918791391891">Call +91 87913 91891</a>
+      <a class="btn" href="Princi_Jadaun_Resume.pdf">Download resume</a>
+    </div>
+
+    <div class="footer-meta">
+      <span>Princi Jadaun — Ghaziabad, India</span>
+      <span>Built with React.js, Node.js, Express.js, MongoDB</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
